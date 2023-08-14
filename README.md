@@ -1,6 +1,11 @@
 # mqbot
 a qqbot tool based on go-cqhttp and nodejs
 
+##How to use
+- 下载 [go-cqhttp](https://github.com/Mrs4s/go-cqhttp/releases) ，运行时请启用**正向ws**模式。
+- 根据 go-cqhttp 进行配置。
+- 运行你的机器人脚本。
+
 ## Install
 `npm install mqbot`
 
@@ -9,12 +14,12 @@ a qqbot tool based on go-cqhttp and nodejs
 const Bot = require("mqbot");
 
 let bot = new Bot({
-	port:8080
+    port:8080
 });
 
 bot.on("message",(data)=>{
-	let message = data.message;
-	if(message == "ping") bot.reply(data,"pong!");
+    let message = data.message;
+    if(message == "ping") bot.reply(data,"pong!");
 });
 ```
 
@@ -22,8 +27,8 @@ bot.on("message",(data)=>{
 `let bot = new Bot(config);`
 |Key|Value|Default|
 |----|----|----|
-|address|gocqhttp中WebSocket的地址|`"ws://0.0.0.0"`|
-|port|gocqhttp中WebSocket的端口|`8080`|
+|address|go-cqhttp中WebSocket的地址|`"ws://0.0.0.0"`|
+|port|go-cqhttp中WebSocket的端口|`8080`|
 |whiteUserList|用户白名单，空列表表示不启用|`[]`|
 |whiteGroupList|群组白名单，空列表表示不启用|`[]`|
 |blackUserList|用户黑名单|`[]`|
