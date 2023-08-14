@@ -1,7 +1,7 @@
 # mqbot
 a qqbot tool based on go-cqhttp and nodejs
 
-##How to use
+## How to use
 - 下载 [go-cqhttp](https://github.com/Mrs4s/go-cqhttp/releases) ，运行时请启用**正向ws**模式。
 - 根据 go-cqhttp 进行配置。
 - 运行你的机器人脚本。
