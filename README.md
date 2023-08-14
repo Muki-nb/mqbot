@@ -6,7 +6,7 @@ a qqbot tool based on go-cqhttp and nodejs
 
 ## Example
 ```js
-const Bot = require("mbot");
+const Bot = require("mqbot");
 
 let bot = new Bot({
 	port:8080
@@ -14,7 +14,7 @@ let bot = new Bot({
 
 bot.on("message",(data)=>{
 	let message = data.message;
-	if(message == "ping") bot.reply(data,"pong！");
+	if(message == "ping") bot.reply(data,"pong!");
 });
 ```
 
