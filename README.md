@@ -38,3 +38,6 @@ bot.on("message",(data)=>{
 - 群组白名单启用时，仅白名单群组会响应message事件。
 - 用户白名单启用时，仅白名单用户会响应message事件。
 - 二者均启用时，群组白名单中的任何非黑名单用户都会响应message事件。而白名单用户在任何非黑名单群组都会响应message事件。
+
+## Reference
+- [已实现的功能方法](https://github.com/Muki-nb/mqbot/wiki/Bot-Function)
