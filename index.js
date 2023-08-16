@@ -142,28 +142,28 @@ class Bot{
 	}
 
 	buildMessages(arr){
-		if(typeof arr != "Array"){
+		if(!Array.isArray(arr)){
 			console.log("arr is not an Array.");
 			return;
 		}
 		let result = [];
-		for(let i = 0;i < arr;i++){
+		for(let i = 0;i < arr.length;i++){
 			let node = {
 				"type":"node",
 				"data":{
 
 				}
 			}
-			if(id in arr[i]){
+			if("id" in arr[i]){
 				node.data.id = arr[i].id;
 				result.push(node);
 				continue;
 			}else{
 				if(!("uin" in arr[i])) continue;
 				node.data.uin = arr[i].uin;
-				if("content" in arr[i]) arr[i].content;
-				if("seq" in arr[i]) arr[i].seq;
-				if("name" in arr[i]) arr[i].name;
+				if("content" in arr[i]) node.data.content = arr[i].content;
+				if("seq" in arr[i]) node.data.seq = arr[i].seq;
+				if("name" in arr[i]) node.data.name = arr[i].name;
 				result.push(node);
 				continue;
 			}
@@ -223,7 +223,7 @@ class Bot{
 		});
 		return this.callEcho(echoid,(data)=>{
 			let id = data.data.message_id, forward = data.data.forward_id;
-			console.log(`Bot in user(${user_id}) sendMsg(${id}): [合并消息:${forward}]`);
+			console.log(`BOT in group(${group_id}) sendMsg(id:${id}): [合并消息:${forward}]`);
 		});
 	}
 	sendPrivateForwardMsg(user_id,messages){
@@ -238,7 +238,7 @@ class Bot{
 		});
 		return this.callEcho(echoid,(data)=>{
 			let id = data.data.message_id, forward = data.data.forward_id;
-			console.log(`BOT in group(${group_id}) sendMsg(id:${id}): [合并消息:${forward}]`);
+			console.log(`Bot in user(${user_id}) sendMsg(${id}): [合并消息:${forward}]`);
 		});
 	}
 	replyForwardMsg(data,messages){
@@ -262,7 +262,7 @@ class Bot{
 	getForwardMsg(message_id){
 		let echoid = this.getEchoId();
 		this.send({
-			"action":"get_friend_list",
+			"action":"get_forward_msg",
 			"params":{
 				message_id
 			},
@@ -284,7 +284,7 @@ class Bot{
 	getGroupList(){
 		let echoid = this.getEchoId();
 		this.send({
-			"action":"get_friend_list",
+			"action":"get_group_list",
 			"echo":echoid
 		});
 		return this.callEcho(echoid);
@@ -339,7 +339,7 @@ class Bot{
 	}
 	setGroupSpecialTitle(group_id,user_id,special_title){
 		this.send({
-			"action":"set_group_card",
+			"action":"set_group_special_title",
 			"params":{
 				group_id,
 				user_id,

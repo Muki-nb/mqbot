@@ -1,6 +1,6 @@
 {
   "name": "mqbot",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "a qqbot tool based on go-cqhttp",
   "main": "index.js",
   "scripts": {
