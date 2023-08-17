@@ -34,20 +34,24 @@ class Bot{
 	}
 
 	events = {
-		message: [],
-		request: [],
-		notice: []
+
 	};
-	on(str,func){
+	on(eventName,callback){
+		/*
 		if(!eventTypes.includes(str)){
 			console.error("str can only be 'message','request' and 'notice'.");
 			return;
 		}
-		if(typeof(func) != "function"){
-			console.error("func is not a function.");
+		*/
+		if(typeof(callback) != "function"){
+			console.error("callback is not a function.");
 			return;
 		}
-		this.events[str].push(func);
+		if(!(eventName in this.events)) this.events[eventName] = [];
+		this.events[eventName].push(callback);
+	}
+	off(eventName){
+		if(eventName in this.events) this.events[eventName] = [];
 	}
 
 	ignore(data){
@@ -92,15 +96,33 @@ class Bot{
 			return;
 		}
 
-		//whitelist & blacklist
+		let post_type = data.post_type;
+		let second_type = data[post_type + "_type"];
+		let sub_type = data.sub_type;
+		
 		if(this.ignore(data)) return;
 
+		this.emit(post_type,data);
+		this.emit(`${post_type}.${second_type}`,data);
+		if("sub_type" in data) this.emit(`${post_type}.${second_type}.${sub_type}`,data);
+
+		//whitelist & blacklist
+
+		/*
 		let type = data.post_type;
 		if(eventTypes.includes(type)){
 			let length = this.events[type].length;
 			for(let i = 0;i < length;i++){
 				this.events[type][i](data);
 			}
+		}
+		*/
+	}
+	emit(eventName,data){
+		if(!(eventName in this.events)) return;
+		let length = this.events[eventName].length;
+		for(let i = 0;i < length;i++){
+			this.events[eventName][i](data);
 		}
 	}
 
@@ -164,6 +186,7 @@ class Bot{
 				if("content" in arr[i]) node.data.content = arr[i].content;
 				if("seq" in arr[i]) node.data.seq = arr[i].seq;
 				if("name" in arr[i]) node.data.name = arr[i].name;
+				if("time" in arr[i]) node.data.time = arr[i].time;
 				result.push(node);
 				continue;
 			}
@@ -186,7 +209,7 @@ class Bot{
 		});
 		return this.callEcho(echoid,(data)=>{
 			let id = data.data.message_id;
-			console.log(`BOT in group(${group_id}) sendMsg(id:${id}): ${message}`);
+			console.log(`Bot in group(${group_id}) sendMsg(id:${id}): ${message}`);
 		});
 	}
 	sendPrivateMsg(user_id,message,auto_escape = false){
@@ -202,7 +225,7 @@ class Bot{
 		});
 		return this.callEcho(echoid,(data)=>{
 			let id = data.data.message_id;
-			console.log(`Bot in user(${user_id}) sendMsg(${id}): ${message}`);
+			console.log(`Bot in user(${user_id}) sendMsg(id:${id}): ${message}`);
 		});
 	}
 	reply(data,message,auto_escape = false){
@@ -223,7 +246,7 @@ class Bot{
 		});
 		return this.callEcho(echoid,(data)=>{
 			let id = data.data.message_id, forward = data.data.forward_id;
-			console.log(`BOT in group(${group_id}) sendMsg(id:${id}): [合并消息:${forward}]`);
+			console.log(`Bot in group(${group_id}) sendMsg(id:${id}): [合并消息:${forward}]`);
 		});
 	}
 	sendPrivateForwardMsg(user_id,messages){
@@ -238,7 +261,7 @@ class Bot{
 		});
 		return this.callEcho(echoid,(data)=>{
 			let id = data.data.message_id, forward = data.data.forward_id;
-			console.log(`Bot in user(${user_id}) sendMsg(${id}): [合并消息:${forward}]`);
+			console.log(`Bot in user(${user_id}) sendMsg(id:${id}): [合并消息:${forward}]`);
 		});
 	}
 	replyForwardMsg(data,messages){
@@ -382,6 +405,28 @@ class Bot{
 			"action":"set_group_leave",
 			"params":{
 				group_id
+			}
+		});
+	}
+
+	setFriendAddRequest(flag,approve = true,remark = ""){
+		this.send({
+			"action":"set_friend_add_request",
+			"params":{
+				flag,
+				approve,
+				remark
+			}
+		});
+	}
+	setGroupAddRequest(flag,sub_type,approve = true,reason = ""){
+		this.send({
+			"action":"set_group_add_request",
+			"params":{
+				flag,
+				sub_type,
+				approve,
+				reason
 			}
 		});
 	}

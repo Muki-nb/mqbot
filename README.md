@@ -41,3 +41,4 @@ bot.on("message",(data)=>{
 
 ## Reference
 - [已实现的功能方法](https://github.com/Muki-nb/mqbot/wiki/Bot-Function)
+- [常用事件](https://github.com/Muki-nb/mqbot/wiki/Bot-Event)
