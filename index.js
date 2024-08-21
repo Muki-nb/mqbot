@@ -210,6 +210,8 @@ class Bot{
 		return this.callEcho(echoid,(data)=>{
 			let id = data.data.message_id;
 			console.log(`Bot in group(${group_id}) sendMsg(id:${id}): ${message}`);
+		}).catch(e => {
+			console.log(`[Error]:\n${e}`);
 		});
 	}
 	sendPrivateMsg(user_id,message,auto_escape = false){
@@ -226,6 +228,8 @@ class Bot{
 		return this.callEcho(echoid,(data)=>{
 			let id = data.data.message_id;
 			console.log(`Bot in user(${user_id}) sendMsg(id:${id}): ${message}`);
+		}).catch(e => {
+			console.log(`[Error]:\n${e}`);
 		});
 	}
 	reply(data,message,auto_escape = false){
@@ -247,6 +251,8 @@ class Bot{
 		return this.callEcho(echoid,(data)=>{
 			let id = data.data.message_id, forward = data.data.forward_id;
 			console.log(`Bot in group(${group_id}) sendMsg(id:${id}): [合并消息:${forward}]`);
+		}).catch(e => {
+			console.log(`[Error]:\n${e}`);
 		});
 	}
 	sendPrivateForwardMsg(user_id,messages){
@@ -262,6 +268,8 @@ class Bot{
 		return this.callEcho(echoid,(data)=>{
 			let id = data.data.message_id, forward = data.data.forward_id;
 			console.log(`Bot in user(${user_id}) sendMsg(id:${id}): [合并消息:${forward}]`);
+		}).catch(e => {
+			console.log(`[Error]:\n${e}`);
 		});
 	}
 	replyForwardMsg(data,messages){
@@ -291,7 +299,9 @@ class Bot{
 			},
 			"echo":echoid
 		});
-		return this.callEcho(echoid);
+		return this.callEcho(echoid).catch(e => {
+			console.log(`[Error]:\n${e}`);
+		});
 	}
 
 	//group information
@@ -301,7 +311,9 @@ class Bot{
 			"action":"get_friend_list",
 			"echo":echoid
 		});
-		return this.callEcho(echoid);
+		return this.callEcho(echoid).catch(e => {
+			console.log(`[Error]:\n${e}`);
+		});
 	}
 
 	getGroupList(){
@@ -310,7 +322,9 @@ class Bot{
 			"action":"get_group_list",
 			"echo":echoid
 		});
-		return this.callEcho(echoid);
+		return this.callEcho(echoid).catch(e => {
+			console.log(`[Error]:\n${e}`);
+		});
 	}
 
 	getGroupMemberInfo(group_id, user_id){
@@ -323,7 +337,9 @@ class Bot{
 			},
 			"echo":echoid
 		});
-		return this.callEcho(echoid);
+		return this.callEcho(echoid).catch(e => {
+			console.log(`[Error]:\n${e}`);
+		});
 	}
 
 	getGroupMemberList(group_id){
@@ -335,7 +351,9 @@ class Bot{
 			},
 			"echo":echoid
 		});
-		return this.callEcho(echoid);
+		return this.callEcho(echoid).catch(e => {
+			console.log(`[Error]:\n${e}`);
+		});
 	}
 
 	//Set
